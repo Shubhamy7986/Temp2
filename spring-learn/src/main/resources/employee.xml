@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+<bean id="departmentBean" class="com.cognizant.bean.Department">
+        <property name="id" value="1" />
+        <property name="name" value="Payroll" />
+</bean>
+
+<bean id="skillHtml" class="com.cognizant.bean.Skill">
+	<property name="id" value="1"/>
+	<property name="name" value="HTML"/>
+</bean>
+
+<bean id="skillCss" class="com.cognizant.bean.Skill">
+	<property name="id" value="2"/>
+	<property name="name" value="CSS"/>
+</bean>
+
+<bean id="skillJs" class="com.cognizant.bean.Skill">
+	<property name="id" value="3"/>
+	<property name="name" value="JS"/>
+</bean>
+ 
+
+    
+<bean id="employee_details" class="com.cognizant.bean.Employee">
+	<property name="id" value="10" />
+	<property name="name" value="Shubham" />
+	<property name="salary" value="10000" />
+	<property name="permanent" value="true" />
+	<property name="dateOfBirth" value="12/10/2019" />
+	<property name="department" ref="departmentBean"/>
+	<property name="skill">
+    	<array>
+            <ref bean="skillHtml" />
+            <ref bean="skillCss" />
+            <ref bean="skillJs" />
+        </array>
+    </property>
+</bean>
+
+
+</beans>
