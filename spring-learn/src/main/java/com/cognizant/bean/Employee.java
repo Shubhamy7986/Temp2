@@ -3,16 +3,37 @@ package com.cognizant.bean;
 import java.util.Arrays;
 import java.util.Date;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 public class Employee {
 
+	@NotNull
+	@Min(value=0)
 	private int id;
+	
+	@NotNull
+	@NotBlank
+	@Size(min=1,max=30,message="Name should be 1 character")
 	private String name;
+	
+	@NotNull
+	@Min(value=0)
 	private double salary;
+	
+	@NotNull
 	private boolean permanent;
+	
+	@JsonFormat(shape=JsonFormat.Shape.STRING, pattern="dd/MM/yyyy")
 	private Date dateOfBirth;
+	
 	private Department department;
 	private Skill skill[];
 	
