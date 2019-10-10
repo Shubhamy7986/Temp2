@@ -1,14 +1,6 @@
 package com.cognizant.controller;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
-import javax.validation.ConstraintViolation;
-import javax.validation.Valid;
-import javax.validation.Validation;
-import javax.validation.Validator;
-import javax.validation.ValidatorFactory;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,12 +9,12 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 import com.cognizant.springlearn.Country;
 import com.cognizant.springlearn.exception.CountryNotFoundException;
@@ -57,10 +49,28 @@ public class CountryController {
 		return new ResponseEntity<Country>(country,HttpStatus.OK);
 	}
 	
-	@PostMapping()
+	@PostMapping("/countries")
+	public ArrayList getCountry(@RequestBody Country country){
+		ApplicationContext context = new ClassPathXmlApplicationContext("country.xml");
+		ArrayList countryList = (ArrayList) context.getBean("countryList",ArrayList.class);
+		countryList.add(country);
+		return countryList;
+	}
+	
+	@DeleteMapping("/countries/{code}")
+	public ResponseEntity<?> removeCountry(@PathVariable("code")String code) throws CountryNotFoundException{
+		Country country = CountryService.removeCountry(code);
+		if(null==country){
+			return new ResponseEntity<Object>(null,HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<Country>(country,HttpStatus.OK);
+	}
+	
+	
+	/*@PostMapping()
 	public Country addCountry(@RequestBody @Valid Country country){
 		LOGGER.info("START");
 		LOGGER.info(country.toString());
 		return country;
-	}
+	}*/
 }

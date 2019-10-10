@@ -29,4 +29,23 @@ public class CountryService {
 	}
 	
 	}
+	
+	public static Country removeCountry(String code)throws CountryNotFoundException{
+		ApplicationContext context = new ClassPathXmlApplicationContext("country.xml");
+		List<Country> countries = (ArrayList<Country>) context.getBean("countryList",ArrayList.class);
+		Country country = null;
+		
+		for(int i=0;i<countries.size();i++){
+			if(countries.get(i).getCode().equalsIgnoreCase(code)){
+				country=countries.remove(i);
+			}
+		}
+		if(country==null){
+			throw new CountryNotFoundException();
+		}
+		else{
+			return country;
+		}
+		
+		}
 	}
